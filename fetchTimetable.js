@@ -1,5 +1,4 @@
 import { config } from "dotenv";
-
 config();
 
 const s3Endpoint = process.env.APU_TIMETABLE_S3;
@@ -39,9 +38,8 @@ export async function fetchTimetables() {
 
     // Filter the courses by the user's elective choices
     const result = filterByElective(filteredData, nonElectives);
-    console.log("Results: ", result);
 
-    return new Response(JSON.stringify(result)), { status: 200 };
+    return new Response(JSON.stringify(result), { status: 200 });
   } catch (error) {
     return new Response(
       JSON.stringify({ message: "Error fetching data", error: error.message }),
