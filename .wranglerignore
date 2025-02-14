@@ -1,0 +1,10 @@
+node_modules/
+.env
+.wrangler
+.env.sample
+.gitignore
+package-lock.json
+package.json
+index.js
+addToCalendar.js
+fetchTimetable.js
