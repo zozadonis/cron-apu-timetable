@@ -62,6 +62,11 @@ async function getAccessToken(env) {
       }),
     });
 
+    if (!response.ok) {
+      console.error("Error fetching access token:", await response.text());
+      return null;
+    }
+
     const data = await response.json();
     return data.access_token;
   } catch (error) {
@@ -91,13 +96,34 @@ export async function addToCalendarWorker(eventDetails, env) {
   // Check if the event already exists
   const existingEventsRes = await fetch(
     `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?${searchParams}`,
-    {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    },
+    { headers: { Authorization: `Bearer ${accessToken}` } },
   );
+
+  if (!existingEventsRes.ok) {
+    console.error(
+      "Failed to fetch existing events:",
+      await existingEventsRes.text(),
+    );
+    return;
+  }
+
   const existingEvents = await existingEventsRes.json();
 
-  if (existingEvents.items?.length > 0) {
+  // Ensure existingEvents.items is an array before accessing it
+  if (!existingEvents.items || !Array.isArray(existingEvents.items)) {
+    console.error("Unexpected API response:", existingEvents);
+    return;
+  }
+
+  // Check if the event already exists
+  const eventExists = existingEvents.items.some(
+    (event) =>
+      event.start?.dateTime === eventDetails.start.dateTime &&
+      event.end?.dateTime === eventDetails.end.dateTime &&
+      event.summary === eventDetails.summary,
+  );
+
+  if (eventExists) {
     console.log("Event already exists:", existingEvents.items[0].htmlLink);
     return existingEvents.items[0];
   }
@@ -114,6 +140,11 @@ export async function addToCalendarWorker(eventDetails, env) {
       body: JSON.stringify(eventDetails),
     },
   );
+
+  if (!insertRes.ok) {
+    console.error("Failed to add event:", await insertRes.text());
+    return;
+  }
 
   const insertedEvent = await insertRes.json();
   console.log("Event added:", insertedEvent.htmlLink);

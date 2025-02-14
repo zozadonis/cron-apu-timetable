@@ -5,7 +5,7 @@ const s3Endpoint = process.env.APU_TIMETABLE_S3;
 const intakeCode = process.env.INTAKE_CODE;
 const nonElectives = ["CT027-3-3-EPDA", "CT024-3-3-DCOMS"]; // Add MODID that is NOT your elective
 
-export async function fetchTimetables() {
+export async function fetchTimetable() {
   if (!s3Endpoint) {
     return new Response(
       JSON.stringify({ message: "Error: S3 endpoint not configured" }),

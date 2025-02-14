@@ -11,7 +11,8 @@
   "description": "",
   "dependencies": {
     "dotenv": "^16.4.7",
-    "googleapis": "^144.0.0"
+    "googleapis": "^144.0.0",
+    "wrangler": "^3.108.1"
   },
   "type": "module"
 }

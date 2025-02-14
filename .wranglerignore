@@ -1,10 +1,20 @@
-node_modules/
+# env files
 .env
-.wrangler
 .env.sample
-.gitignore
+
+# node modules and packages
+node_modules/
 package-lock.json
 package.json
+
+# git files
+.gitignore
+
+# misc files
+.wrangler
+.wrangler-sample.toml
+
+# code files
 index.js
 addToCalendar.js
 fetchTimetable.js

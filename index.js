@@ -1,10 +1,10 @@
-import { fetchTimetables } from "./fetchTimetable.js";
+import { fetchTimetable } from "./fetchTimetable.js";
 import { addToCalendar } from "./addToCalendar.js";
 
 (async () => {
   console.log("Fetching timetable...");
 
-  const response = await fetchTimetables();
+  const response = await fetchTimetable();
 
   // Check if response is valid
   if (!response || !response.json) {
