@@ -1,0 +1,38 @@
+name: your actions name
+
+on:
+  schedule:
+    - cron: "0 2 * * 5" # runs every friday at 2 AM UTC
+  workflow_dispatch:
+
+jobs:
+  sync-s3-to-calendar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run the index script
+        run: node index.js
+        env:
+          APU_TIMETABLE_S3: ${{ secrets.APU_TIMETABLE_S3 }}
+          INTAKE_CODE: ${{ secrets.INTAKE_CODE }}
+          CALENDAR_ID: ${{ secrets.CALENDAR_ID }}
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          CLIENT_EMAIL: ${{ secrets.CLIENT_EMAIL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_CERT_URL: ${{ secrets.CLIENT_CERT_URL }}
+      - name: Notify on failure
+        if: failure()
+        run: echo "❌ Sync failed!"
