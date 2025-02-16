@@ -26,13 +26,9 @@ jobs:
         env:
           APU_TIMETABLE_S3: ${{ secrets.APU_TIMETABLE_S3 }}
           INTAKE_CODE: ${{ secrets.INTAKE_CODE }}
+          GOOGLE_ACCOUNT_VARIABLES: ${{ secrets.GOOGLE_ACCOUNT_VARIABLES }}
           CALENDAR_ID: ${{ secrets.CALENDAR_ID }}
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}
-          PRIVATE_KEY_ID: ${{ secrets.PRIVATE_KEY_ID }}
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-          CLIENT_EMAIL: ${{ secrets.CLIENT_EMAIL }}
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_CERT_URL: ${{ secrets.CLIENT_CERT_URL }}
+
       - name: Notify on failure
         if: failure()
         run: echo "❌ Sync failed!"

@@ -4,19 +4,16 @@ import { addToCalendar } from "./addToCalendar.js";
 (async () => {
   console.log("Fetching timetable...");
 
-  const response = await fetchTimetable();
-
-  // Check if response is valid
-  if (!response || !response.json) {
-    console.error("Error: Invalid response from fetchTimetables", response);
-    return;
-  }
-
-  const timetable = await response.json();
+  const timetable = await fetchTimetable();
 
   // Ensure timetable is an array before looping
   if (!Array.isArray(timetable)) {
     console.error("Error: Expected an array but got", typeof timetable);
+    return;
+  }
+
+  if (!timetable.length > 1) {
+    console.error("Received an empty array from fetchTimetable.js");
     return;
   }
 

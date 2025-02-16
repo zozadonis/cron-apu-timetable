@@ -3,35 +3,28 @@ config();
 
 const s3Endpoint = process.env.APU_TIMETABLE_S3;
 const intakeCode = process.env.INTAKE_CODE;
-const nonElectives = ["CT027-3-3-EPDA", "CT024-3-3-DCOMS"]; // Add MODID that is NOT your elective
+const nonElectives = [""]; // Add MODID that is NOT your elective
 
 export async function fetchTimetable() {
   if (!s3Endpoint) {
-    return new Response(
-      JSON.stringify({ message: "Error: S3 endpoint not configured" }),
-      { status: 500 },
-    );
+    console.error("Error: S3 endpoint not configured");
+    return []; // Return empty array instead of Response
   }
 
   if (!intakeCode) {
-    return new Response(
-      JSON.stringify({ message: "Error: Intake Code not configured" }),
-      { status: 500 },
-    );
+    console.error("Error: Intake Code not configured");
+    return [];
   }
 
   try {
     const response = await fetch(s3Endpoint);
 
     if (!response.ok) {
-      return new Response(
-        JSON.stringify({ message: "Error: Unable to fetch data from S3" }),
-        { status: 500 },
-      );
+      console.error("Error: Unable to fetch data from S3");
+      return [];
     }
 
     const data = await response.json();
-    // console.log("Fetched Data:", data);
 
     // Filter the entire S3 dataset by intake code
     const filteredData = filterByIntake(data, intakeCode);
@@ -39,12 +32,10 @@ export async function fetchTimetable() {
     // Filter the courses by the user's elective choices
     const result = filterByElective(filteredData, nonElectives);
 
-    return new Response(JSON.stringify(result), { status: 200 });
+    return result; // Return data directly as an array
   } catch (error) {
-    return new Response(
-      JSON.stringify({ message: "Error fetching data", error: error.message }),
-      { status: 500 },
-    );
+    console.error("Error fetching data:", error.message);
+    return []; // Return empty array on error
   }
 }
 
@@ -64,7 +55,6 @@ const filterByElective = (filteredData, nonElectives) => {
   return filteredData.filter((entry) => {
     const modid = entry.MODID?.trim();
     const isNonElective = nonElectives.some((mod) => modid?.includes(mod));
-    // console.log(`Checking MODID: ${modid}, isNonElective: ${isNonElective}`);
     return !isNonElective; // Keep only those that are NOT nonElectives
   });
 };
