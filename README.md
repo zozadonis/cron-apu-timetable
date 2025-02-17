@@ -1,12 +1,11 @@
 # Cron APU Timetable
 
-# If you have any questions during the session, please raise your hand for any committees or stop me whenever.
-
 ### Prerequisites
 1. [nodejs](https://nodejs.org/en/download)
 2. [git](https://git-scm.com/downloads)
-3. a [cloudflare](https://www.cloudflare.com/) account
+3. [npm]()
 4. a [gcp](https://cloud.google.com/) account
+5. passion to learn (just kidding)
 
 ## Getting Started
 
@@ -33,11 +32,27 @@ INTAKE_CODE="YOUR INTAKE CODE"
 
 ## GOOGLE SERVICE ACCOUNT VARIABLES
 CALENDAR_ID="YOUR CALENDAR ID"
-PROJECT_ID="YOUR PROJECT ID"
-PRIVATE_KEY_ID="YOUR PRIVATE KEY ID"
-PRIVATE_KEY="YOUR PRIVATE KEY"
-CLIENT_EMAIL="YOUR CLIENT EMAIL"
-CLIENT_ID="YOUR CLIENT ID"
-CLIENT_CERT_URL="YOUR CLIENT CERT URL"
+GOOGLE_ACCOUNT_VARIABLES={YOUR_CONVERTED_JSON_TEXT}
 
 ```
+
+You can get the `APU_TIMETABLE_S3` by accessing your browser's dev tools when viewing APSpace's timetable.
+
+Google Account Variables actually refer to the JSON file that you can download after creating a service account.
+
+To simplify the process and ensure that the JSON file works in the `.env` file, I've created a helper function to help you convert the file.
+
+To run it, ensure that you rename the `.json` file to `serviceAccount.json`
+
+Then run in the root of the project:
+```
+node jsonCoverter.js
+```
+
+It should output the entire file in `variable.txt`. Copy that and place it directly at `GOOGLE_ACCOUNT_VARIABLES` in `.env`.
+
+## Deploying to Github Actions
+
+Before setting up Github Actions, make sure you modify the file in `./github/workflows/cron.yml`
+
+Last but not least, remember to push the code to Github before setting up Actions.
