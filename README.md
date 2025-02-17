@@ -5,7 +5,7 @@
 2. [git](https://git-scm.com/downloads)
 3. [npm]()
 4. a [gcp](https://cloud.google.com/) account
-5. passion to learn (just kidding)
+5. ability to code yourself (just kidding, you'll be guided)
 
 ## Getting Started
 
