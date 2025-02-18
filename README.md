@@ -36,8 +36,6 @@ GOOGLE_ACCOUNT_VARIABLES={YOUR_CONVERTED_JSON_TEXT}
 
 ```
 
-You can get the `APU_TIMETABLE_S3` by accessing your browser's dev tools when viewing APSpace's timetable.
-
 Google Account Variables actually refer to the JSON file that you can download after creating a service account.
 
 To simplify the process and ensure that the JSON file works in the `.env` file, I've created a helper function to help you convert the file.

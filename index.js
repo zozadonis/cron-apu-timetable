@@ -17,6 +17,7 @@ import { addToCalendar } from "./addToCalendar.js";
     return;
   }
 
+  console.log("Fetched Timetables: ", timetable);
   const formattedTimetable = timetable.map((event) => ({
     summary: event.MODID,
     start: {
@@ -31,5 +32,6 @@ import { addToCalendar } from "./addToCalendar.js";
 
   for (const event of formattedTimetable) {
     await addToCalendar(event);
+    console.log("Events finished adding to calendar");
   }
 })();
