@@ -54,3 +54,10 @@ It should output the entire file in `variable.txt`. Copy that and place it direc
 Before setting up Github Actions, make sure you modify the file in `./github/workflows/cron.yml`
 
 Last but not least, remember to push the code to Github before setting up Actions.
+
+## Common issues
+- Forgetting to enable Google Calendar API Key
+- Github Actions Secrets not copied paste properly
+- Incorrectly setting up the `.env` file (There should be no curly brackets + GOOGLE_ACCOUNT_VARIABLES should be one line of .json format)
+- Remeber to double check that you forked instead of cloned.
+- cron.yml file wasn't properly configured
